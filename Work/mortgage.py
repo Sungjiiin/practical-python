@@ -68,7 +68,8 @@ while principal > 0:
     if principal < 0:
         break
     paid_month += 1
-    print(paid_month, round(total_paid, 2), round(principal, 2))
+    print(f'{paid_month} ${total_paid:0.2f} ${principal:0.2f}')
 
-print('Total paid', total_paid)
-print('Paid month', paid_month)
+# Exercise 1.17
+print(f'Total paid ${total_paid:0.2f}')
+print(f'Paid month ${paid_month}')

@@ -14,9 +14,21 @@ day = 1
 while num_bills * bill_thickness < sears_height:
     print(day, num_bills, num_bills * bill_thickness)
     day = day + 1
-    num_bills = num_bills * 2
+    num_bills = num_bills * 2 # 다음 세 문장은 들여쓰기가 같으므로 함께 묶여 반복적으로 수행된다.
 
 print('Number of days', day)
 print('Number of bills', num_bills)
 print('Final_height', num_bills * bill_thickness)
 
+# Best practice Indentation
+# - Not Tab, use space
+# - Use 4 space per levels
+# - Use a Python-aware editor.
+
+# 같은 블록 내의 들여쓰기에 대해서만 일관적인 들여쓰기를 요구한다. 다음 코드는 오류를 일으킨다
+# '''
+# while num_bills * bill_thickness < sears_height:
+#     print(day, num_bills, num_bills * bill_thickness)
+#         day = day + 1  # 오류
+#     num_bills = num_bills * 2
+# '''

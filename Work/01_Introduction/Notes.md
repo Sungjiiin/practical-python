@@ -1,0 +1,1 @@
+모듈로 지정하는 연습문제는 Work directory에, 그외 일반 연습문제 + 코드는 Course마다 directory를 만들어서 저장해둡니다.

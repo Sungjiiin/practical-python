@@ -44,6 +44,7 @@
 #     return portfolio
 
 # Exercise 2.5 딕셔너리의 리스트
+# Exercise 2.16
 
 import csv
 
@@ -55,8 +56,13 @@ def read_portfolio(filename):
         rows = csv.reader(f)
         headers = next(rows)
         for row in rows:
-            D = {'name': row[0], 'shares': int(row[1]), 'price': float(row[2])}
-            portfolio.append(D)
+            record = dict(zip(headers, row))
+            stock = {
+                'name': record['name'],
+                'shares': int(record['shares']),
+                'price': float(record['price'])
+            }
+            portfolio.append(stock)
     return portfolio
 
 def read_prices(filename):

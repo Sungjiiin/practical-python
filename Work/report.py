@@ -73,16 +73,42 @@ def read_prices(filename):
 
     return prices
 
+# portfolio = read_portfolio('Data/portfolio.csv')
+# prices = read_prices('Data/prices.csv')
+
+# total_cost = 0.0
+# for s in portfolio:
+#     total_cost += s['price'] * s['shares']
+# total_value = 0.0
+# for s in portfolio:
+#     total_value += prices[s['name']] * s['shares']
+#
+# print('Cost :', total_cost)
+# print('Value :', total_value - total_cost)
+
+# Exercise 2.9 데이터 수집하기
+
+def make_report(portfolio, prices):
+    report = []
+
+    for s in portfolio:
+        temp = (s['name'], s['shares'], s['price'], s['price']-prices[s['name']])
+        report.append(temp)
+    return report
+
 portfolio = read_portfolio('Data/portfolio.csv')
 prices = read_prices('Data/prices.csv')
+report = make_report(portfolio, prices)
 
-total_cost = 0.0
-for s in portfolio:
-    total_cost += s['price'] * s['shares']
-total_value = 0.0
-for s in portfolio:
-    total_value += prices[s['name']] * s['shares']
+# Exercise 2.11, 12 : 헤더 추가하기
+headers = ('Name', 'Shares', 'Price', 'Change')
 
-print('Cost :', total_cost)
-print('Value :', total_value - total_cost)
+print('%10s %10s %10s %10s' % headers)
+print(('-' * 10 + ' ') * len(headers))
+for r in report:
+    print('%10s %10d %10.2f %10.2f' % r)
 
+print('%10s %10s %10s %10s' % headers)
+print(('-' * 10 + ' ') * len(headers))
+for name, shares, price, change in report:
+    print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')

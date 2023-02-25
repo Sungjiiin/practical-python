@@ -118,3 +118,29 @@ def make_report(portfolio, prices):
 # print(('-' * 10 + ' ') * len(headers))
 # for name, shares, price, change in report:
 #     print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
+
+# Exercise 3.1 : 프로그램을 함수의 컬렉션을 구조화하기
+
+def print_report(report):
+    headers = ('Name', 'Shares', 'Price', 'Change')
+
+    print('%10s %10s %10s %10s' % headers)
+    print(('-' * 10 + ' ') * len(headers))
+    for r in report:
+        print('%10s %10d %10.2f %10.2f' % r)
+
+def portfolio_report(portfolio_filename, prices_filename):
+
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+
+    report = make_report(portfolio=portfolio, prices=prices)
+    print_report(report)
+
+#portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+
+# interactive에서 실행하면 다른 파일도 가져와서 출력 가능
+# >>> for name in files:     }')           v')
+# ...     print(f'{name:-^43s}')
+# ...     report.portfolio_report(name, 'Data/prices.csv')
+# ...     print()

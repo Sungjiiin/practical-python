@@ -151,11 +151,13 @@ from fileparse import parse_csv
 
 def read_portfolio(filename):
     '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
-    return parse_csv(filename, select=['name','shares','price'], types=[str,int,float])
+    with open(filename) as lines:
+        return parse_csv(lines, select=['name','shares','price'], types=[str,int,float])
 
 def read_prices(filename):
     '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
-    return dict(parse_csv(filename, types=[str,float], has_headers=False))
+    with open(filename) as lines:
+        return dict(parse_csv(lines, types=[str,float], has_headers=False))
 
 def make_report(portfolio, prices):
     report = []

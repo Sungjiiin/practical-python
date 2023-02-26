@@ -87,34 +87,34 @@
 # enumerate()를 사용해 pcost.py 프로그램이 잘못된 입력을 만나면 행 번호와 경고 메시지를 프린트하게 해 보라.
 
 
-import csv
-import sys
-
-def portfolio_cost(filename):
-    filename: str
-
-    total_cost = 0
-    f = open(filename)
-    rows = csv.reader(f)
-    headers = next(rows)
-    for idx, row in enumerate(rows, start=1):
-        record = dict(zip(headers, row))
-        try:
-            nshares = int(record['shares'])
-            price = float(record['price'])
-            total_cost += nshares * price
-        except ValueError:
-            print(f'Row {idx}: Bad row: {row}')
-
-    return total_cost
-
-if len(sys.argv) == 2:
-    filename = sys.argv[1] # 명령행에서 전달받은 인자가 있을 경우 sys.argv 리스트에 들어있다.
-else:
-    filename = 'Data/portfolio.csv'
-
-cost = portfolio_cost(filename)
-print(f'Total cost: {cost}')
+# import csv
+# import sys
+#
+# def portfolio_cost(filename):
+#     filename: str
+#
+#     total_cost = 0
+#     f = open(filename)
+#     rows = csv.reader(f)
+#     headers = next(rows)
+#     for idx, row in enumerate(rows, start=1):
+#         record = dict(zip(headers, row))
+#         try:
+#             nshares = int(record['shares'])
+#             price = float(record['price'])
+#             total_cost += nshares * price
+#         except ValueError:
+#             print(f'Row {idx}: Bad row: {row}')
+#
+#     return total_cost
+#
+# if len(sys.argv) == 2:
+#     filename = sys.argv[1] # 명령행에서 전달받은 인자가 있을 경우 sys.argv 리스트에 들어있다.
+# else:
+#     filename = 'Data/portfolio.csv'
+#
+# cost = portfolio_cost(filename)
+# print(f'Total cost: {cost}')
 
 # 데이터 파일이 앞에서 사용한 것과 완전히 달라지더라도 프로그램이 여전히 작동할 것이다. 멋지지 않은가!
 #
@@ -122,3 +122,24 @@ print(f'Total cost: {cost}')
 # 새로운 버전의 portfolio_cost() 함수에서는 고정된 파일 형식을 하드코딩하는 대신,
 # 어느 CSV 파일이 들어오더라도 원하는 값을 골라낼 수 있게 됐다.
 # 필요한 컬럼이 파일에 있기만 하면 코드는 잘 작동한다.
+
+
+# Exercise 3.14
+
+import report
+
+def portfolio_cost(filename):
+    filename: str
+
+    total_cost = 0
+    portfolio = report.read_portfolio(filename)
+
+    for idx, row in enumerate(portfolio):
+        try:
+            nshares = int(row['shares'])
+            price = float(row['price'])
+            total_cost += nshares * price
+        except ValueError:
+            print(f'Row {idx}: Bad row: {row}')
+
+    return total_cost

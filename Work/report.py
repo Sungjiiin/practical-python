@@ -45,39 +45,39 @@
 
 # Exercise 2.5 딕셔너리의 리스트
 # Exercise 2.16
+#
+# import csv
 
-import csv
-
-def read_portfolio(filename):
-    '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
-    portfolio = []
-
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-        for row in rows:
-            record = dict(zip(headers, row))
-            stock = {
-                'name': record['name'],
-                'shares': int(record['shares']),
-                'price': float(record['price'])
-            }
-            portfolio.append(stock)
-    return portfolio
-
-def read_prices(filename):
-    '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
-    prices = {}
-
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        for row in rows:
-            try:
-                prices[row[0]] = float(row[1])
-            except IndexError:
-                pass
-
-    return prices
+# def read_portfolio(filename):
+#     '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
+#     portfolio = []
+#
+#     with open(filename, 'rt') as f:
+#         rows = csv.reader(f)
+#         headers = next(rows)
+#         for row in rows:
+#             record = dict(zip(headers, row))
+#             stock = {
+#                 'name': record['name'],
+#                 'shares': int(record['shares']),
+#                 'price': float(record['price'])
+#             }
+#             portfolio.append(stock)
+#     return portfolio
+#
+# def read_prices(filename):
+#     '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
+#     prices = {}
+#
+#     with open(filename, 'rt') as f:
+#         rows = csv.reader(f)
+#         for row in rows:
+#             try:
+#                 prices[row[0]] = float(row[1])
+#             except IndexError:
+#                 pass
+#
+#     return prices
 
 # portfolio = read_portfolio('Data/portfolio.csv')
 # prices = read_prices('Data/prices.csv')
@@ -94,13 +94,13 @@ def read_prices(filename):
 
 # Exercise 2.9 데이터 수집하기
 
-def make_report(portfolio, prices):
-    report = []
-
-    for s in portfolio:
-        temp = (s['name'], s['shares'], s['price'], s['price']-prices[s['name']])
-        report.append(temp)
-    return report
+# def make_report(portfolio, prices):
+#     report = []
+#
+#     for s in portfolio:
+#         temp = (s['name'], s['shares'], s['price'], s['price']-prices[s['name']])
+#         report.append(temp)
+#     return report
 #
 # portfolio = read_portfolio('Data/portfolio.csv')
 # prices = read_prices('Data/prices.csv')
@@ -121,6 +121,51 @@ def make_report(portfolio, prices):
 
 # Exercise 3.1 : 프로그램을 함수의 컬렉션을 구조화하기
 
+# def print_report(report):
+#     headers = ('Name', 'Shares', 'Price', 'Change')
+#
+#     print('%10s %10s %10s %10s' % headers)
+#     print(('-' * 10 + ' ') * len(headers))
+#     for r in report:
+#         print('%10s %10d %10.2f %10.2f' % r)
+#
+# def portfolio_report(portfolio_filename, prices_filename):
+#
+#     portfolio = read_portfolio(portfolio_filename)
+#     prices = read_prices(prices_filename)
+#
+#     report = make_report(portfolio=portfolio, prices=prices)
+#     print_report(report)
+
+#portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+
+# interactive에서 실행하면 다른 파일도 가져와서 출력 가능
+# >>> for name in files:     }')           v')
+# ...     print(f'{name:-^43s}')
+# ...     report.portfolio_report(name, 'Data/prices.csv')
+# ...     print()
+
+# Exercise 3.12
+
+from fileparse import parse_csv
+
+def read_portfolio(filename):
+    '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
+    return parse_csv(filename, select=['name','shares','price'], types=[str,int,float])
+
+def read_prices(filename):
+    '''포트폴리오 파일의 총 비용(주식수*가격)을 계산'''
+    return dict(parse_csv(filename, types=[str,float], has_headers=False))
+
+def make_report(portfolio, prices):
+    report = []
+
+    for s in portfolio:
+        temp = (s['name'], s['shares'], s['price'], s['price']-prices[s['name']])
+        report.append(temp)
+    return report
+
+
 def print_report(report):
     headers = ('Name', 'Shares', 'Price', 'Change')
 
@@ -137,10 +182,4 @@ def portfolio_report(portfolio_filename, prices_filename):
     report = make_report(portfolio=portfolio, prices=prices)
     print_report(report)
 
-#portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
-
-# interactive에서 실행하면 다른 파일도 가져와서 출력 가능
-# >>> for name in files:     }')           v')
-# ...     print(f'{name:-^43s}')
-# ...     report.portfolio_report(name, 'Data/prices.csv')
-# ...     print()
+portfolio_report('Data/portfolio.csv', 'Data/prices.csv')

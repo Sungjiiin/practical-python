@@ -143,3 +143,10 @@ def portfolio_cost(filename):
             print(f'Row {idx}: Bad row: {row}')
 
     return total_cost
+
+def main(argv):
+    print(f'Total cost: {portfolio_cost(*argv[1:])}')
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv)

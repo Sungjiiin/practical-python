@@ -182,4 +182,9 @@ def portfolio_report(portfolio_filename, prices_filename):
     report = make_report(portfolio=portfolio, prices=prices)
     print_report(report)
 
-portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+def main(argv):
+    portfolio_report(*argv[1:])
+
+if __name__ == "__main__":
+    import sys
+    main(sys.argv)
